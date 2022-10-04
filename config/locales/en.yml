@@ -1,6 +1,11 @@
 ---
 en:
   decidim:
+    devise:
+      registrations:
+        modulable_registration_fields:
+          signup:
+            legend: More information
     components:
       modulable_registration:
         name: ModulableRegistration
