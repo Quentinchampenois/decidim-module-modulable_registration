@@ -1,0 +1,6 @@
+---
+en:
+  decidim:
+    components:
+      modulable_registration:
+        name: ModulableRegistration
