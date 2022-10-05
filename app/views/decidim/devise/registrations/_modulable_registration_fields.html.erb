@@ -1,7 +1,11 @@
 <% if current_organization.registration_fields_enabled? %>
   <div class="card">
     <div class="card__content card__modulable_registration">
-      <h3><%= t(".signup.legend") %></h3>
+      <div class="legend">
+        <h3><%= t(".signup.legend") %></h3>
+      </div>
+
+      <%= render "decidim/devise/registrations/fields/birth_date", f: f %>
     </div>
   </div>
 <% end %>

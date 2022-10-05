@@ -1,0 +1,5 @@
+<% if current_organization.activated_registration_field?(:birth_date) %>
+  <div class="field">
+    <%= f.date_field :birth_date %>
+  </div>
+<% end %>
