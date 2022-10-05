@@ -2,20 +2,20 @@
 
 source "https://rubygems.org"
 
-DECIDIM_VERSION = { git: "https://github.com/decidim/decidim", branch: "release/0.26-stable" }
+DECIDIM_VERSION = { git: "https://github.com/decidim/decidim", branch: "release/0.26-stable" }.freeze
 ruby RUBY_VERSION
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-modulable_registration", path: "."
 
-gem "puma", ">= 5.5.1"
 gem "bootsnap", "~> 1.4"
+gem "puma", ">= 5.5.1"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
-  gem "rubocop-faker"
   gem "decidim-dev", DECIDIM_VERSION
+  gem "rubocop-faker"
 end
 
 group :development do

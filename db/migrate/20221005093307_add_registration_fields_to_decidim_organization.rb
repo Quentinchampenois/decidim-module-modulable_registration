@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddRegistrationFieldsToDecidimOrganization < ActiveRecord::Migration[6.0]
   def up
     add_column :decidim_organizations, :registration_fields, :jsonb, default: { "enabled" => false }

@@ -2,7 +2,6 @@
 
 require "decidim/modulable_registration/test/factories"
 
-
 FactoryBot.modify do
   factory :organization, class: "Decidim::Organization" do
     transient do
@@ -50,15 +49,19 @@ FactoryBot.modify do
     registration_fields { {} }
 
     trait :registration_fields_enabled do
-      registration_fields { {
-        enabled: true
-      } }
+      registration_fields do
+        {
+          enabled: true
+        }
+      end
     end
 
     trait :registration_fields_disabled do
-      registration_fields { {
-        enabled: false
-      } }
+      registration_fields do
+        {
+          enabled: false
+        }
+      end
     end
 
     trait :secure_context do

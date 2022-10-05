@@ -8,6 +8,9 @@ AllCops:
     - "**/Gemfile"
     - "**/Rakefile"
   Exclude:
+    - "development_app/**/*"
+    - "spec/decidim_dummy_app/**/*"
+    - "bin/**/*"
     - "node_modules/**/*"
     - "db/schema.rb"
     - "vendor/**/*"
