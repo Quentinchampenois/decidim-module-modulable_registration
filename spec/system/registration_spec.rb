@@ -11,7 +11,7 @@ def fill_registration_form
 end
 
 describe "Modulable registration", type: :system do
-  let(:organization) { create(:organization, :registration_fields_enabled) }
+  let(:organization) { create(:organization) }
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
 
   before do
@@ -27,7 +27,7 @@ describe "Modulable registration", type: :system do
     end
 
     context "when registration fields are disabled" do
-      let(:organization) { create(:organization) }
+      let(:organization) { create(:organization, :registration_fields_disabled) }
 
       it "does not display registration fields" do
         expect(page).not_to have_css(".card__modulable_registration")

@@ -46,12 +46,12 @@ FactoryBot.modify do
     end
     file_upload_settings { Decidim::OrganizationSettings.default(:upload) }
     enable_participatory_space_filters { true }
-    registration_fields { {} }
+    registration_fields { { "enabled" => true } }
 
     trait :registration_fields_enabled do
       registration_fields do
         {
-          enabled: true
+          "enabled" => true
         }
       end
     end
@@ -59,7 +59,7 @@ FactoryBot.modify do
     trait :registration_fields_disabled do
       registration_fields do
         {
-          enabled: false
+          "enabled" => false
         }
       end
     end
