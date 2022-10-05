@@ -1,6 +1,6 @@
 class AddRegistrationFieldsToDecidimOrganization < ActiveRecord::Migration[6.0]
   def up
-    add_column :decidim_organizations, :registration_fields, :jsonb, default: {}
+    add_column :decidim_organizations, :registration_fields, :jsonb, default: { "enabled" => false }
   end
 
   def down
