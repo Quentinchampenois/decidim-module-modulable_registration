@@ -18,6 +18,10 @@ module Decidim
       initializer "ModulableRegistration.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
+
+      initializer "decidim_modulable_registration.extends" do
+        require "decidim/extends/models/organization_extend"
+      end
     end
   end
 end

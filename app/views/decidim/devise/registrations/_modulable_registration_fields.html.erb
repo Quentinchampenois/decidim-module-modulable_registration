@@ -1,5 +1,7 @@
-<div class="card">
-  <div class="card__content card__modulable_registration">
-    <h3><%= t(".signup.legend") %></h3>
+<% if current_organization.registration_fields_enabled? %>
+  <div class="card">
+    <div class="card__content card__modulable_registration">
+      <h3><%= t(".signup.legend") %></h3>
+    </div>
   </div>
-</div>
+<% end %>
