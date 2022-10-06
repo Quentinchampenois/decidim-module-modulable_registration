@@ -17,7 +17,7 @@ module RegistrationFormExtend
       return unless current_organization.activated_registration_field? :birth_date
       return if birth_date.is_a? Date
 
-      errors.add :birth_date, :format, message: "Format must be : 01/01/2000"
+      errors.add :birth_date, :format, message: "Birth date format must be : 01/01/2000"
     end
   end
 end

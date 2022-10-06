@@ -8,21 +8,31 @@ def fill_registration_form
   fill_in :registration_user_email, with: "nikola.tesla@example.org"
   fill_in :registration_user_password, with: "sekritpass123"
   fill_in :registration_user_password_confirmation, with: "sekritpass123"
+  fill_in :registration_user_birth_date, with: "01/01/2000"
+  page.check("registration_user_newsletter")
+  page.check("registration_user_tos_agreement")
 end
 
 describe "Modulable registration", type: :system do
   let(:organization) { create(:organization, registration_fields: registration_fields) }
   let(:registration_fields) do
-    {
-      "enabled" => true,
-      "birth_date" => true
-    }
+    { "enabled" => true, "birth_date" => true }
   end
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
 
   before do
     switch_to_host(organization.host)
     visit decidim.new_user_registration_path
+  end
+
+  it "validates registration request" do
+    fill_registration_form
+
+    within "form.new_user" do
+      find("*[type=submit]").click
+    end
+
+    expect(page).to have_content("message with a confirmation link")
   end
 
   context "when signing up" do
