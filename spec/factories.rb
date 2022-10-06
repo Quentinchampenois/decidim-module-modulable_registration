@@ -46,12 +46,20 @@ FactoryBot.modify do
     end
     file_upload_settings { Decidim::OrganizationSettings.default(:upload) }
     enable_participatory_space_filters { true }
-    registration_fields { { "enabled" => true } }
+    registration_fields do
+      {
+        "enabled" => true,
+        "birth_date" => true,
+        "minimum_age" => true
+      }
+    end
 
     trait :registration_fields_enabled do
       registration_fields do
         {
-          "enabled" => true
+          "enabled" => true,
+          "birth_date" => true,
+          "minimum_age" => true
         }
       end
     end
@@ -59,7 +67,9 @@ FactoryBot.modify do
     trait :registration_fields_disabled do
       registration_fields do
         {
-          "enabled" => false
+          "enabled" => false,
+          "birth_date" => true,
+          "minimum_age" => true
         }
       end
     end

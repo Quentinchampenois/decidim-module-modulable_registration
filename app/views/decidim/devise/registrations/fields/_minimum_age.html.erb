@@ -1,0 +1,5 @@
+<% if current_organization.activated_registration_field?(:minimum_age) %>
+  <div class="field">
+    <%= f.check_box :minimum_age, label: t(".label") %>
+  </div>
+<% end %>

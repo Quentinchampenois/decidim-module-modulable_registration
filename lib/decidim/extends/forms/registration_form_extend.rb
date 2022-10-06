@@ -7,17 +7,19 @@ module RegistrationFormExtend
 
   included do
     attribute :birth_date, Decidim::Attributes::LocalizedDate
+    attribute :minimum_age, Virtus::Attribute::Boolean
 
-    validate :birth_date_validation
+    validates :birth_date, presence: true, if: :birth_date?
+    validates :minimum_age, acceptance: true, if: :minimum_age?
 
     private
 
-    def birth_date_validation
-      return unless current_organization.registration_fields_enabled?
-      return unless current_organization.activated_registration_field? :birth_date
-      return if birth_date.is_a? Date
+    def birth_date?
+      current_organization.registration_fields_enabled? && current_organization.activated_registration_field?(:birth_date)
+    end
 
-      errors.add :birth_date, :format, message: "Birth date format must be : 01/01/2000"
+    def minimum_age?
+      current_organization.registration_fields_enabled? && current_organization.activated_registration_field?(:minimum_age)
     end
   end
 end

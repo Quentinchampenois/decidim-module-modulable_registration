@@ -16,7 +16,8 @@ module Decidim
     let(:registration_fields) do
       {
         "enabled" => true,
-        "birth_date" => true
+        "birth_date" => true,
+        "minimum_age" => true
       }
     end
     let(:name) { "User" }
@@ -26,6 +27,7 @@ module Decidim
     let(:password_confirmation) { password }
     let(:tos_agreement) { "1" }
     let(:birth_date) { "01/01/2000" }
+    let(:minimum_age) { true }
 
     let(:attributes) do
       {
@@ -35,7 +37,8 @@ module Decidim
         password: password,
         password_confirmation: password_confirmation,
         tos_agreement: tos_agreement,
-        birth_date: birth_date
+        birth_date: birth_date,
+        minimum_age: minimum_age
       }
     end
 
@@ -53,7 +56,8 @@ module Decidim
       let(:registration_fields) do
         {
           "enabled" => false,
-          "birth_date" => true
+          "birth_date" => true,
+          "minimum_age" => true
         }
       end
 
@@ -65,7 +69,8 @@ module Decidim
         let(:registration_fields) do
           {
             "enabled" => true,
-            "birth_date" => false
+            "birth_date" => false,
+            "minimum_age" => true
           }
         end
 
@@ -74,6 +79,26 @@ module Decidim
 
       context "when birth_date is not a class" do
         let(:birth_date) { "Not a date" }
+
+        it { is_expected.to be_invalid }
+      end
+    end
+
+    describe "minimum_age" do
+      context "when registration field is disabled" do
+        let(:registration_fields) do
+          {
+            "enabled" => true,
+            "birth_date" => true,
+            "minimum_age" => false
+          }
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context "when minimum_age is not checked" do
+        let(:minimum_age) { false }
 
         it { is_expected.to be_invalid }
       end

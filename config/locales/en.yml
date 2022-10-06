@@ -1,8 +1,18 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        user:
+          attributes:
+            minimum_age:
+              acceptance: Minimum age must be checked for signing up
   decidim:
     devise:
       registrations:
+        fields:
+          minimum_age:
+            label: I confirm that I have the minimum age required
         modulable_registration_fields:
           signup:
             legend: More information
