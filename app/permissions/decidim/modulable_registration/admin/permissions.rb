@@ -9,6 +9,7 @@ module Decidim
           return permission_action unless user&.admin?
 
           allow! if can_access?
+          allow! if can_create?
 
           permission_action
         end
@@ -16,6 +17,11 @@ module Decidim
         def can_access?
           permission_action.subject == :modulable_registration &&
             permission_action.action == :read
+        end
+
+        def can_create?
+          permission_action.subject == :modulable_registration &&
+            permission_action.action == :create
         end
       end
     end

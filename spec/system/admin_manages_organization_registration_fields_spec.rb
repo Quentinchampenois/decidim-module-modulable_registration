@@ -11,67 +11,45 @@ describe "Admin manages organization registration fields", type: :system do
     login_as user, scope: :user
   end
 
-  context "when editing a non-persisted content block" do
-    it "creates the content block to the db before editing it" do
+  it "creates a new item in submenu" do
+    visit decidim_admin.edit_organization_path
+
+    within ".secondary-nav" do
+      expect(page).to have_content("Registration fields")
+    end
+  end
+
+  context "when accessing modulable registration" do
+    before do
       visit decidim_modulable_registration.root_path
+    end
 
-      expect(Decidim::ContentBlock.count).to eq 0
+    it "displays the form" do
+      within "#modulable_registration" do
+        expect(page).to have_content("Manage your registration form")
+      end
+    end
 
-      within ".js-list-availables" do
-        within find("li", text: "Hero image") do
-          find("svg.icon--pencil").click
-        end
+    it "allows to enable registration fields" do
+      within ".registration_fields" do
+        expect(page).to have_content("Enable registration fields")
       end
 
-      expect(Decidim::ContentBlock.count).to eq 1
-    end
-  end
-
-  context "when editing a persisted content block" do
-    let!(:content_block) { create :content_block, organization: organization, manifest_name: :hero, scope_name: :homepage }
-
-    it "updates the settings of the content block" do
-      visit decidim_admin.edit_organization_homepage_content_block_path(:hero)
-
-      fill_in(
-        :content_block_settings_welcome_text_en,
-        with: "Custom welcome text!"
-      )
-
-      click_button "Update"
-      visit decidim.root_path
-      expect(page).to have_content("Custom welcome text!")
+      within ".extra_registration_fields" do
+        expect(page).to have_content("Enable birth date field")
+        expect(page).to have_content("Enable minimum age checkbox condition")
+      end
     end
 
-    it "updates the images of the content block" do
-      visit decidim_admin.edit_organization_homepage_content_block_path(:hero)
+    context "when form is valid" do
+      it "flashes a success message" do
+        page.check("modulable_registration[registration_fields_enabled]")
+        page.check("modulable_registration[birth_date]")
+        page.check("modulable_registration[minimum_age]")
 
-      attach_file(
-        :content_block_images_background_image,
-        Decidim::Dev.asset("city2.jpeg")
-      )
-
-      click_button "Update"
-      visit decidim.root_path
-      expect(page.html).to include("city2.jpeg")
-    end
-  end
-
-  context "when loading non-existing content blocks" do
-    let!(:unpublished_block) { create :content_block, organization: organization, scope_name: :homepage, published_at: nil }
-    let!(:published_block) { create :content_block, organization: organization, scope_name: :homepage }
-
-    before do
-      # We do this to simulate content blocks from some modules that have been
-      # uninstalled from the app.
-      unpublished_block.update(manifest_name: :fake_name)
-      published_block.update(manifest_name: :fake_name)
-    end
-
-    it "loads the page as expected" do
-      visit decidim_admin.edit_organization_homepage_path
-
-      expect(page).to have_text("Active content blocks")
+        find("*[type=submit]").click
+        expect(page).to have_content("Organization successfully updated !")
+      end
     end
   end
 end

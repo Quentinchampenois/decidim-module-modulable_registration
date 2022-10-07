@@ -1,0 +1,21 @@
+<p class="callout success"><%== t(".callout.help") %></p>
+<div class="card">
+  <div class="card-section registration_fields">
+    <div>
+      <h3><%= t(".global.title") %></h3>
+    </div>
+    <div class="row column">
+      <%= form.check_box :registration_fields_enabled, label: "Enable registration fields" %>
+    </div>
+  </div>
+</div>
+
+<div class="card extra_registration_fields">
+  <div class="card-section">
+  <div>
+    <h3><%= t(".extra_registration_fields.section") %></h3>
+  </div>
+  <%= render partial: "decidim/modulable_registration/admin/modulable_registration/fields/birth_date", locals: { form: form } %>
+  <%= render partial: "decidim/modulable_registration/admin/modulable_registration/fields/minimum_age", locals: { form: form } %>
+  </div>
+</div>

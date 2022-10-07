@@ -29,6 +29,14 @@ module Decidim::ModulableRegistration::Admin
 
         it_behaves_like "permission is not set"
       end
+
+      context "and action is create" do
+        let(:action) do
+          { scope: :admin, action: :create, subject: :modulable_registration }
+        end
+
+        it { is_expected.to be_truthy }
+      end
     end
 
     context "when user is not admin" do

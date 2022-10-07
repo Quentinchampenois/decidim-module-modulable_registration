@@ -8,16 +8,13 @@ en:
             minimum_age:
               acceptance: Minimum age must be checked for signing up
   decidim:
-    modulable_registration:
-      admin:
-        modulable_registration:
-          index:
-            section: Registration fields form
-            title: Manage your registration form
     admin:
       modulable_registration:
         menu:
           title: Registration fields
+    components:
+      modulable_registration:
+        name: ModulableRegistration
     devise:
       registrations:
         fields:
@@ -26,6 +23,31 @@ en:
         modulable_registration_fields:
           signup:
             legend: More information
-    components:
-      modulable_registration:
-        name: ModulableRegistration
+    modulable_registration:
+      admin:
+        modulable_registration:
+          create:
+            failure: An error occured while updating organization
+            success: Organization successfully updated !
+          fields:
+            birth_date:
+              description: This field is a Date field. User will be able to register
+                a birth date by using a Date picker
+              label: Enable birth date field
+            minimum_age:
+              description: This field is a Checkbox field. User will have to check
+                this option to be able to validate the form.
+              label: Enable minimum age checkbox condition
+          form:
+            callout:
+              help: Enable custom registration fields to be able to manage extra fields
+                in your signup form. Even if option is checked, signup form will be
+                updated <strong>only if there is at least one extra field enabled</strong>
+            extra_registration_fields:
+              section: Enable / disable custom fields in your signup form
+            global:
+              title: Activate the feature
+          index:
+            save: Save
+            section: Registration fields form
+            title: Manage your registration form

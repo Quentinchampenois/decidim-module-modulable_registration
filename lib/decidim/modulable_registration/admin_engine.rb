@@ -11,11 +11,9 @@ module Decidim
 
       routes do
         # Add admin engine routes here
-        # resources :modulable_registration do
-        #   collection do
-        #     resources :exports, only: [:create]
-        #   end
-        # end
+        resources :modulable_registration, as: "modulable_registrations" do
+        end
+
         root to: "modulable_registration#index"
       end
 

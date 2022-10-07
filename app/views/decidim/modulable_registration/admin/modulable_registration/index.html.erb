@@ -5,6 +5,12 @@
     </h2>
   </div>
   <div class="card-section">
-    <p><%= t(".section") %></p>
+    <%= decidim_form_for(@form, html: { class: "form edit_registration_field" }) do |f| %>
+      <%= render partial: "form", object: f %>
+
+      <div class="button--double form-general-submit">
+        <%= f.submit t(".save") %>
+      </div>
+    <% end %>
   </div>
 </div>
