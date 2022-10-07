@@ -15,11 +15,15 @@ module RegistrationFormExtend
     private
 
     def birth_date?
-      current_organization.registration_fields_enabled? && current_organization.activated_registration_field?(:birth_date)
+      registration_field_enabled && current_organization.activated_registration_field?(:birth_date)
     end
 
     def minimum_age?
-      current_organization.registration_fields_enabled? && current_organization.activated_registration_field?(:minimum_age)
+      registration_field_enabled && current_organization.activated_registration_field?(:minimum_age)
+    end
+
+    def registration_field_enabled
+      @registration_field_enabled ||= current_organization.registration_fields_enabled?
     end
   end
 end
