@@ -16,7 +16,23 @@ module Decidim
         #     resources :exports, only: [:create]
         #   end
         # end
-        # root to: "modulable_registration#index"
+        root to: "modulable_registration#index"
+      end
+
+      initializer "decidim_modulable_registration.admin_mount_routes" do
+        Decidim::Core::Engine.routes do
+          mount Decidim::ModulableRegistration::AdminEngine, at: "/admin/registration_fields", as: "decidim_modulable_registration"
+        end
+      end
+
+      initializer "decidim_modulable_registration.admin_settings_menu" do
+        Decidim.menu :admin_settings_menu do |menu|
+          menu.add_item :modulable_registration,
+                        t("decidim.admin.modulable_registration.menu.title"),
+                        decidim_modulable_registration.root_path,
+                        icon_name: "dashboard",
+                        position: 11
+        end
       end
 
       def load_seed

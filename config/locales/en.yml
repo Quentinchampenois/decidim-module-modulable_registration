@@ -8,6 +8,16 @@ en:
             minimum_age:
               acceptance: Minimum age must be checked for signing up
   decidim:
+    modulable_registration:
+      admin:
+        modulable_registration:
+          index:
+            section: Registration fields form
+            title: Manage your registration form
+    admin:
+      modulable_registration:
+        menu:
+          title: Registration fields
     devise:
       registrations:
         fields:
