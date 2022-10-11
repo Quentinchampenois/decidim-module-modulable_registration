@@ -9,7 +9,6 @@ module Decidim
         # Create an organisation with registration fields disabled
         let(:organization) { create(:organization, registration_fields: { "enabled" => false }) }
 
-
         let(:name) { "Username" }
         let(:nickname) { "nickname" }
         let(:email) { "user@example.org" }
@@ -116,6 +115,7 @@ module Decidim
           end
         end
       end
+
       describe "call with registration_fields" do
         # Create an organisation with registration fields enabled
         let(:organization) { create(:organization) }
@@ -218,6 +218,7 @@ module Decidim
 
             expect { command.call }.to change(User, :count).by(1)
           end
+
           context "when the form is supposed valid and the user has a registration field that is empty and so doesn't create the user" do
             describe "when user keeps the minimum_age unchecked" do
               let(:minimum_age) { false }
@@ -229,6 +230,7 @@ module Decidim
                 end.to change(User, :count).by(0)
               end
             end
+
             describe "when user tells a blank birth_date" do
               let(:birth_date) { nil }
 
@@ -240,6 +242,7 @@ module Decidim
                 end.to change(User, :count).by(0)
               end
             end
+
             describe "when both of them are blank" do
               let(:birth_date) { nil }
               let(:minimum_age) { false }
