@@ -21,6 +21,17 @@ And then execute:
 bundle
 ```
 
+## How to use it
+
+```
+- Go to Back Office
+- Go to Settings
+- Search for Registration Fields
+- Click on the checkbox "Enable registration fields" otherwise it won't work !
+- Select the registration fields you want to add
+- Let your new users register with those new fields
+```
+
 ## Contributing
 
 Contributions are welcome !
