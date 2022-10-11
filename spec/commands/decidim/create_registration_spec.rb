@@ -6,8 +6,7 @@ module Decidim
   module Comments
     describe CreateRegistration do
       describe "call without registration_fields" do
-        # Create an organisation with registration fields disabled
-        let(:organization) { create(:organization, registration_fields: { "enabled" => false }) }
+        let(:organization) { create(:organization, :registration_fields_disabled) }
 
         let(:name) { "Username" }
         let(:nickname) { "nickname" }
@@ -116,7 +115,7 @@ module Decidim
         end
       end
 
-      describe "call with registration_fields" do
+      describe "registration fields enabled" do
         # Create an organisation with registration fields enabled
         let(:organization) { create(:organization) }
 
@@ -157,41 +156,6 @@ module Decidim
 
         let(:command) { described_class.new(form) }
 
-        describe "when the form is not valid" do
-          before do
-            expect(form).to receive(:invalid?).and_return(true)
-          end
-
-          it "broadcasts invalid" do
-            expect { command.call }.to broadcast(:invalid)
-          end
-
-          it "doesn't create a user" do
-            expect do
-              command.call
-            end.not_to change(User, :count)
-          end
-
-          context "when the user was already invited" do
-            let(:user) { build(:user, email: email, organization: organization) }
-
-            before do
-              user.invite!
-              clear_enqueued_jobs
-            end
-
-            it "receives the invitation email again" do
-              expect do
-                command.call
-                user.reload
-              end.to change(User, :count).by(0)
-                                         .and broadcast(:invalid)
-                .and change(user.reload, :invitation_token)
-              expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.on_queue("mailers")
-            end
-          end
-        end
-
         describe "when the form is valid" do
           it "broadcasts ok" do
             expect { command.call }.to broadcast(:ok)
@@ -220,7 +184,7 @@ module Decidim
           end
 
           context "when the form is supposed valid and the user has a registration field that is empty and so doesn't create the user" do
-            describe "when user keeps the minimum_age unchecked" do
+            describe "when birth_date is mandatory but unchecked" do
               let(:minimum_age) { false }
 
               it "returns an error" do
@@ -231,7 +195,7 @@ module Decidim
               end
             end
 
-            describe "when user tells a blank birth_date" do
+            describe "when birth_date is mandatory but empty" do
               let(:birth_date) { nil }
 
               it "returns an error" do
@@ -243,7 +207,7 @@ module Decidim
               end
             end
 
-            describe "when both of them are blank" do
+            describe "when both of them are mandatory but empty and unchecked" do
               let(:birth_date) { nil }
               let(:minimum_age) { false }
 
