@@ -22,10 +22,12 @@ module Decidim
       initializer "decidim_modulable_registration.extends" do
         require "decidim/extends/models/organization_extend"
         require "decidim/extends/forms/registration_form_extend"
+        require "decidim/extends/commands/create_registration_extend"
 
         config.to_prepare do
           Decidim::Organization.include OrganizationExtend
           Decidim::RegistrationForm.include RegistrationFormExtend
+          Decidim::CreateRegistration.include CreateRegistrationExtend
         end
       end
     end
